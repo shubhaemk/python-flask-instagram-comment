@@ -1,9 +1,6 @@
 from flask_restful import Resource, Api
 from InstagramAPI import InstagramAPI
 from flask import Flask, request
-import urllib.request as ur
-import json
-
 
 app = Flask(__name__)
 api = Api(app)
