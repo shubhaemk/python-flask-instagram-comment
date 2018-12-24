@@ -19,7 +19,7 @@ class login(Resource):
             return {"login":"false"}
 
 class userFeed(Resource):
-    def get(self):
+    def put(self):
         global API
         data = request.get_json()
         max_id = data["max_id"]
@@ -57,4 +57,4 @@ api.add_resource(login,"/login")
 api.add_resource(userFeed,"/userfeed")
 
 if __name__ == '__main__':
-     app.run(host='0.0.0.0',port=80)
+     app.run(host='127.0.0.1',port=2000)
