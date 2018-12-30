@@ -50,11 +50,28 @@ class analyseComments(Resource):
         API.getMediaComments(media_id,comment_count)
         #API.LastJson holds the json data to analyse
 
+class userInfo(Resource):
+    def get(Self):
+        global Api
+        API.getProfileData()
+        js1 = API.LastJson
+        user_Id = js1['user']['pk']
+        API.getUsernameInfo(user_Id)
+        js2 = API.LastJson
+        return {'userData':js1['user'],'userType':js2['user']['category']}
+
+class logOut(Resource):
+    def get(Self):
+        global API
+        API.logout()
+        return {"logout":True}
 
 api.add_resource(analyseComments,"/analysecomments")
 api.add_resource(getComments,"/getcomments")
 api.add_resource(login,"/login")
 api.add_resource(userFeed,"/userfeed")
+api.add_resource(logOut,"/logout")
+api.add_resource(userInfo,"/userinfo")
 
 if __name__ == '__main__':
      app.run(host='127.0.0.1',port=2000)
