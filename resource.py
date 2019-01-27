@@ -13,10 +13,9 @@ class login(Resource):
         global API
         data = request.get_json()
         API = InstagramAPI(data['username'],data['password'])
-        if API.login():
-            return {"login":"true"}
-        else:
-            return {"login":"false"}
+        API.login()
+        print(API.LastJson)
+        return {"invalid_credentials": API.LastJson['invalid_credentials'],"error" : API.LastJson['error_title'],"error_type":API.LastJson['error_type']}
 
 class userFeed(Resource):
     def put(self):
