@@ -1,6 +1,7 @@
 from flask_restful import Resource, Api
 from InstagramAPI import InstagramAPI
 from flask import Flask, request
+import subprocess as p
 
 app = Flask(__name__)
 api = Api(app)
@@ -42,13 +43,14 @@ class getComments(Resource):
         return API.LastJson
 
 class analyseComments(Resource):
-    def get(self):
+    def put(self):
         global API
         data = request.get_json()
         media_id = data["media_id"]
         comment_count = data["comment_count"]
-        API.getMediaComments(media_id,comment_count)
-        #API.LastJson holds the json data to analyse
+        API.getMediaComments(str(media_id),str(comment_count))
+        analysis = p.check_output("python3 InstagramCommentlyzer.py "+str(API.LastJson), shell=True)
+        return {'Analysis':analysis}
 
 class userInfo(Resource):
     def get(Self):
